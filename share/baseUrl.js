@@ -1,0 +1,1 @@
+export const baseUrl = 'https://shop-fr88.onrender.com/';

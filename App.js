@@ -1,20 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import Main from './components/MainComponent';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Hello World</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+// redux
+import { Provider } from 'react-redux';
+import { ConfigureStore } from './redux/ConfigureStore';
+// redux-persist
+import { PersistGate } from 'redux-persist/es/integration/react';
+const { persistor, store } = ConfigureStore();
+// firebase
+import { initializeApp } from 'firebase/app';
+const firebaseConfig = { databaseURL: 'https://libraryapp-19a5c-default-rtdb.asia-southeast1.firebasedatabase.app/' };
+initializeApp(firebaseConfig);
+
+class App extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <Main />
+        </PersistGate>
+      </Provider>
+    );
+  }
 }
+export default App;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+
+
+
+
